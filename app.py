@@ -11,20 +11,6 @@ from mesa.time import RandomActivation
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 
-# PARAMETER DEFINITIONS:
-# N: Total number of agents (people) in the simulation
-# init_inf: Initial number of infected agents at the start
-# base_trans: Base probability of HIV transmission per contact
-# condom_use: Reduces base transmission rate (as a proportion)
-# treat_cov: Proportion of tested individuals who receive treatment
-# treat_eff: Effectiveness of treatment in reducing HIV progression
-# prog_time: Average time (in days) from infection to AIDS without treatment
-# prog_sd: Standard deviation in progression time across agents
-# dr_unc: Annual death rate for untreated AIDS cases
-# dr_tr: Annual death rate for treated AIDS cases
-# test_rate: Probability per year that an individual gets tested
-# days: Number of steps/days the simulation runs
-
 # --- PAGE CONFIG & STYLES -------------------------------------------------
 st.set_page_config(page_title="HIV MODEL - AGENT BASED SIMULATION", layout="wide")
 st.markdown("""
@@ -228,8 +214,7 @@ if st.sidebar.button('Run'):
         fig2, ax2 = plt.subplots(figsize=(3,2))
         w, h = model.grid.width, model.grid.height
         arr = np.full((w,h), np.nan)
-        for cell, coords in model.grid.coord_iter():
-            x, y = coords
+        for cell, x, y in model.grid.coord_iter():
             if cell: arr[x,y] = cell[-1].hiv_status
         ax2.imshow(arr, vmin=0, vmax=5, cmap='tab20')
         ax2.axis('off')
