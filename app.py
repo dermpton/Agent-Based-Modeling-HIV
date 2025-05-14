@@ -1,3 +1,4 @@
+# app.py
 import time
 import streamlit as st
 import numpy as np
@@ -29,6 +30,7 @@ st.set_page_config(page_title="HIV MODEL - AGENT BASED SIMULATION", layout="wide
 st.markdown("""
 <style>
 .main .block-container { padding: 1rem 2rem; }
+h1 { text-align: center; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -226,7 +228,8 @@ if st.sidebar.button('Run'):
         fig2, ax2 = plt.subplots(figsize=(3,2))
         w, h = model.grid.width, model.grid.height
         arr = np.full((w,h), np.nan)
-        for cell,(x,y) in model.grid.coord_iter():
+        for cell, coords in model.grid.coord_iter():
+            x, y = coords
             if cell: arr[x,y] = cell[-1].hiv_status
         ax2.imshow(arr, vmin=0, vmax=5, cmap='tab20')
         ax2.axis('off')
